@@ -7,15 +7,19 @@ import itacademy.javadevelopment.diplomskirad.models.Radnik;
 import itacademy.javadevelopment.diplomskirad.models.Vlasnik;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.SimpleTimeZone;
 
 public class VlasnikDashboardController {
 
@@ -120,6 +124,32 @@ public class VlasnikDashboardController {
             poljeBrojRadnihMjesta.setText(String.valueOf(novaVrijednost.getBrojRadnihMjesta()));
         });
 
+        listaOdjeljenja.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    if(mouseEvent.getClickCount() == 2){
+                        Odjeljenje selected = listaOdjeljenja.getSelectionModel().getSelectedItem();
+                        if(selected != null) {
+                            try {
+                                Scene trenutnaScena = poljeNaziv.getScene();
+                                Stage trenutniProzor = (Stage) trenutnaScena.getWindow();
+                                VlasnikOdjeljenjeController kontroler = new VlasnikOdjeljenjeController(prijavljeniVlasnik, selected);
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/vlasnik-odjeljenje.fxml"));
+                                loader.setController(kontroler);
+                                Parent root =  loader.load();
+                                trenutniProzor.setScene(new Scene(root));
+                                trenutniProzor.setTitle("Odjeljenje");
+                            } catch (IOException e) {
+                                // Ignore
+                            }
+
+                        }
+                    }
+                }
+            }
+        });
+
         odjaviSeDugme.setOnAction(actionEvent -> {
             try {
                 Scene trenutnaScena = poljeNaziv.getScene();
@@ -155,6 +185,7 @@ public class VlasnikDashboardController {
                 listaOdjeljenja.getItems().add(odjeljenje);
             }
         }
+        opcijaUredjivanje.setDisable(listaOdjeljenja.getItems().size() == 0);
     }
 
     private void pocistiFormu(){

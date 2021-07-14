@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml" styleClass="vlasnik-dashboard-kontejner" vgap="10" hgap="10">
+    <stylesheets>
+        <URL value="@../css/vlasnik-dashboard.css" />
+    </stylesheets>
+
+    <Label fx:id="nazivOdjeljenja" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+    <Label fx:id="adresaOdjeljenja" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    <Label fx:id="kapactitetOdjeljenja" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <ListView fx:id="listaRadnika" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="lista-odjeljenja"/>
+    <GridPane GridPane.rowIndex="3" GridPane.columnIndex="1" vgap="5" hgap="5">
+        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Ime"/>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Prezime"/>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Korisničko ime"/>
+        <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Šifra"/>
+        <Label GridPane.rowIndex="4" GridPane.columnIndex="0" text="Plata"/>
+        <TextField GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="poljeIme" />
+        <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="poljePrezime" />
+        <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="poljeKorisnickoIme" />
+        <TextField GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="poljeSifra" />
+        <TextField GridPane.rowIndex="4" GridPane.columnIndex="1" fx:id="poljePlata" />
+        <GridPane GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2" vgap="10" hgap="10">
+            <RadioButton text="Dodavanje" selected="true" fx:id="opcijaDodavanje" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                <toggleGroup>
+                    <ToggleGroup fx:id="grupa"/>
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton text="Uređivanje" fx:id="opcijaUredjivanje" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                <toggleGroup>
+                    <fx:reference source="grupa"/>
+                </toggleGroup>
+            </RadioButton>
+        </GridPane>
+        <ButtonBar GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2">
+            <buttons>
+                <Button text="Dodaj" fx:id="dodajDugme"/>
+                <Button text="Uredi" fx:id="urediDugme"/>
+                <Button text="Obriši" fx:id="obrisiDugme"/>
+            </buttons>
+        </ButtonBar>
+        <Button GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Počisti formu" fx:id="pocistiFormuDugme"/>
+    </GridPane>
+    <ButtonBar GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2">
+        <buttons>
+            <Button fx:id="vratiSeNazad" text="Vrati se nazad" styleClass="odjavi-dugme"/>
+        </buttons>
+    </ButtonBar>
+</GridPane>

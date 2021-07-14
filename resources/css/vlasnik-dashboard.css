@@ -14,3 +14,7 @@
     -fx-text-fill: white;
     -fx-cursor: hand;
 }
+
+.text-danger {
+    -fx-text-fill: red;
+}

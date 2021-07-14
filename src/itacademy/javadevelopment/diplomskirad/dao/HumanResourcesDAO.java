@@ -390,4 +390,22 @@ public class HumanResourcesDAO {
         }
         return -999;
     }
+
+    public ArrayList<Radnik> selectRadniciOdjeljenja(Odjeljenje odjeljenje) {
+        ArrayList<Radnik> dobavljeniRadnici = new ArrayList<>();
+        try {
+            PreparedStatement query = connection.prepareStatement("SELECT * FROM Radnik WHERE odjeljenje_id=?");
+            query.setInt(1, odjeljenje.getID());
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next()){
+                Odjeljenje odjeljenjeUKojemRadi = selectOdjeljenjeByID(resultSet.getInt(7));
+                dobavljeniRadnici.add(new Radnik(resultSet.getInt(1),resultSet.getString(2),
+                        resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),
+                        resultSet.getInt(6),odjeljenjeUKojemRadi));
+            }
+        } catch (SQLException e) {
+            System.out.println("IZUZETAK: " + e.getMessage());
+        }
+        return dobavljeniRadnici;
+    }
 }
