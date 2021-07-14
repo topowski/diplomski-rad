@@ -15,7 +15,7 @@ public class HumanResourcesDAO {
     private static HumanResourcesDAO instance = null;
     private static Connection connection = null;
 
-    public static HumanResourcesDAO getInstance(){
+    public static HumanResourcesDAO getInstance() {
         if(instance == null) instance = new HumanResourcesDAO();
         return instance;
     }
