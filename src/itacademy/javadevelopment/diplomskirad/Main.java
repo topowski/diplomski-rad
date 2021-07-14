@@ -1,17 +1,10 @@
 package itacademy.javadevelopment.diplomskirad;
 
-import itacademy.javadevelopment.diplomskirad.dao.HumanResourcesDAO;
-import itacademy.javadevelopment.diplomskirad.models.Admin;
-import itacademy.javadevelopment.diplomskirad.models.Odjeljenje;
-import itacademy.javadevelopment.diplomskirad.models.Radnik;
-import itacademy.javadevelopment.diplomskirad.models.Vlasnik;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -26,7 +19,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        HumanResourcesDAO dao = HumanResourcesDAO.getInstance();
         launch(args);
     }
 }
