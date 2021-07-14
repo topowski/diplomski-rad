@@ -310,6 +310,14 @@ public class AdminDashboardController {
             dobaviKorisnike();
             return;
         }
+        ArrayList<Radnik> radniciOdjeljenja = dao.selectRadniciOdjeljenja(poljeOdjeljenje.getValue());
+        if(radniciOdjeljenja.size() == poljeOdjeljenje.getValue().getBrojRadnihMjesta()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("POGREŠKA");
+            alert.setContentText("Kapacitet odjeljenja popunjen");
+            alert.showAndWait();
+            return;
+        }
       dao.insertRadnik(new Radnik(-1, poljeIme.getText(), poljePrezime.getText(),
               poljeKorisnickoIme.getText(), poljeSifra.getText(), Integer.parseInt(poljePlata.getText()), poljeOdjeljenje.getValue()));
         dobaviKorisnike();
@@ -335,6 +343,14 @@ public class AdminDashboardController {
                 dao.updateVlasnik(new Vlasnik(vlasnik.getID(), poljeIme.getText(), poljePrezime.getText(),
                         poljeKorisnickoIme.getText(), poljeSifra.getText(), Integer.parseInt(poljePlata.getText())), vlasnik.getKorisnickoIme());
                 dobaviKorisnike();
+                return;
+            }
+            ArrayList<Radnik> radniciOdjeljenja = dao.selectRadniciOdjeljenja(poljeOdjeljenje.getValue());
+            if(radniciOdjeljenja.size() == poljeOdjeljenje.getValue().getBrojRadnihMjesta()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("POGREŠKA");
+                alert.setContentText("Kapacitet odjeljenja popunjen");
+                alert.showAndWait();
                 return;
             }
             Radnik radnik = (Radnik) selected;
