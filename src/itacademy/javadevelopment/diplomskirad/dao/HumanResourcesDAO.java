@@ -100,8 +100,7 @@ public class HumanResourcesDAO {
         return null;
     }
 
-    public void insertAdmin(Admin newAdmin){
-        try{
+    public void insertAdmin(Admin newAdmin) throws SQLException {
             if( !validirajUsername(newAdmin.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
             PreparedStatement query = connection.prepareStatement("INSERT INTO Admin VALUES (?,?,?,?,?)");
             query.setInt(1,  nextIndex("Admin"));
@@ -110,14 +109,10 @@ public class HumanResourcesDAO {
             query.setString(4, newAdmin.getKorisnickoIme());
             query.setString(5, newAdmin.getSifra());
             query.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("IZUZETAK: " + e.getMessage());
-        }
     }
 
-    public void updateAdmin(Admin newAdmin){
-        try{
-            if( !validirajUsername(newAdmin.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
+    public void updateAdmin(Admin newAdmin, String staroKorisnickoIme) throws SQLException {
+            if( !newAdmin.getKorisnickoIme().equals(staroKorisnickoIme) && !validirajUsername(newAdmin.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
             PreparedStatement query = connection.prepareStatement("UPDATE newAdmin SET ime=?, prezime=?, korisnicko_ime=?, sifra=? WHERE ID=?");
             query.setString(1, newAdmin.getIme());
             query.setString(2, newAdmin.getPrezime());
@@ -125,9 +120,6 @@ public class HumanResourcesDAO {
             query.setString(4, newAdmin.getSifra());
             query.setInt(5, newAdmin.getID());
             query.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("IZUZETAK: " + e.getMessage());
-        }
     }
 
     public void deleteAdmin(Admin admin){
@@ -170,8 +162,7 @@ public class HumanResourcesDAO {
         return null;
     }
 
-    public void insertVlasnik(Vlasnik newVlasnik){
-        try{
+    public void insertVlasnik(Vlasnik newVlasnik) throws SQLException {
             if( !validirajUsername(newVlasnik.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
             PreparedStatement query = connection.prepareStatement("INSERT INTO Vlasnik VALUES (?,?,?,?,?,?)");
             query.setInt(1,  nextIndex("Vlasnik"));
@@ -181,14 +172,10 @@ public class HumanResourcesDAO {
             query.setString(5, newVlasnik.getSifra());
             query.setInt(6, newVlasnik.getPlata());
             query.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("IZUZETAK: " + e.getMessage());
-        }
     }
 
-    public void updateVlasnik(Vlasnik newVlasnik){
-        try{
-            if( !validirajUsername(newVlasnik.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
+    public void updateVlasnik(Vlasnik newVlasnik, String staroKorisnickoIme) throws SQLException {
+            if( !newVlasnik.getKorisnickoIme().equals(staroKorisnickoIme) && !validirajUsername(newVlasnik.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
             PreparedStatement query = connection.prepareStatement("UPDATE Vlasnik SET ime=?, prezime=?, korisnicko_ime=?, sifra=?, plata=? WHERE ID=?");
             query.setString(1, newVlasnik.getIme());
             query.setString(2, newVlasnik.getPrezime());
@@ -197,9 +184,6 @@ public class HumanResourcesDAO {
             query.setInt(5, newVlasnik.getPlata());
             query.setInt(6, newVlasnik.getID());
             query.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("IZUZETAK: " + e.getMessage());
-        }
     }
 
     public void deleteVlasnik(Vlasnik vlasnik){
@@ -346,8 +330,7 @@ public class HumanResourcesDAO {
         return null;
     }
 
-    public void insertRadnik(Radnik newRadnik){
-        try{
+    public void insertRadnik(Radnik newRadnik) throws SQLException {
             if( !validirajUsername(newRadnik.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
             PreparedStatement query = connection.prepareStatement("INSERT INTO Radnik VALUES (?,?,?,?,?,?,?)");
             query.setInt(1, nextIndex("Radnik"));
@@ -358,14 +341,10 @@ public class HumanResourcesDAO {
             query.setInt(6, newRadnik.getPlata());
             query.setInt(7, newRadnik.getOdjeljenje().getID());
             query.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("IZUZETAK: " + e.getMessage());
-        }
     }
 
-    public void updateRadnik(Radnik newRadnik){
-        try{
-            if( !validirajUsername(newRadnik.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
+    public void updateRadnik(Radnik newRadnik, String staroKorisnickoIme) throws SQLException {
+            if( !newRadnik.getKorisnickoIme().equals(staroKorisnickoIme) && !validirajUsername(newRadnik.getKorisnickoIme()) ) throw new SQLException("Korisnik vec postoji");
             PreparedStatement query = connection.prepareStatement("UPDATE Radnik SET ime=?, prezime=?, korisnicko_ime=?, sifra=?, plata=?,odjeljenje_id=? WHERE ID=?");
             query.setString(1, newRadnik.getIme());
             query.setString(2, newRadnik.getPrezime());
@@ -375,9 +354,6 @@ public class HumanResourcesDAO {
             query.setInt(6, newRadnik.getOdjeljenje().getID());
             query.setInt(7, newRadnik.getID());
             query.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("IZUZETAK: " + e.getMessage());
-        }
     }
 
     public void deleteRadnik(Radnik radnik){

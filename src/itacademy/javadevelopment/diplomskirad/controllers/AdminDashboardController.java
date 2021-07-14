@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AdminDashboardController {
@@ -67,10 +68,6 @@ public class AdminDashboardController {
         obrisiDugme.setDisable(true);
         dobaviKorisnike();
 
-        listaUsera.itemsProperty().addListener((notUsed, staraVrijednost, novaVrijednost) -> {
-            opcijaUredjivanje.setDisable( novaVrijednost.size() == 0 );
-        });
-
         ObservableList<Object> objekti = FXCollections.observableArrayList();
         ArrayList<Admin> sviAdmini = dao.selectAdmini();
         sviAdmini.remove(prijavljeniAdmin);
@@ -91,6 +88,9 @@ public class AdminDashboardController {
         opcijaDodavanje.selectedProperty().addListener((notUsed, staraVrijednost, novaVrijednost) -> {
             if(novaVrijednost){
                 dodajDugme.setDisable(false);
+                opcijaAdmin.setDisable(false);
+                opcijaVlasnik.setDisable(false);
+                opcijaRadnik.setDisable(false);
                 urediDugme.setDisable(true);
                 obrisiDugme.setDisable(true);
             }
@@ -104,6 +104,22 @@ public class AdminDashboardController {
                 if(listaUsera.getItems().size() != 0 && listaUsera.getSelectionModel().getSelectedItem() == null) {
                     listaUsera.getSelectionModel().selectFirst();
                 }
+                Object selected = listaUsera.getSelectionModel().getSelectedItem();
+                if(selected instanceof Admin){
+                    opcijaAdmin.setDisable(false);
+                    opcijaVlasnik.setDisable(true);
+                    opcijaRadnik.setDisable(true);
+                    return;
+                }
+                if(selected instanceof Vlasnik){
+                    opcijaVlasnik.setDisable(false);
+                    opcijaAdmin.setDisable(true);
+                    opcijaRadnik.setDisable(true);
+                    return;
+                }
+                opcijaRadnik.setDisable(false);
+                opcijaAdmin.setDisable(true);
+                opcijaVlasnik.setDisable(true);
             }
         });
 
@@ -146,6 +162,17 @@ public class AdminDashboardController {
             dodajKorisnika();
         });
 
+        urediDugme.setOnAction(actionEvent -> {
+            if(!provjeriFormu()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("POGREŠKA");
+                alert.setContentText("Sva polja moraju biti popunjena");
+                alert.showAndWait();
+                return;
+            }
+            urediKorisnika();
+        });
+
         obrisiDugme.setOnAction(actionEvent -> {
             Object selected = listaUsera.getSelectionModel().getSelectedItem();
             if(selected instanceof Admin){
@@ -174,6 +201,9 @@ public class AdminDashboardController {
             if(novaVrijednost instanceof Admin){
                 opcijaUredjivanje.setSelected(true);
                 opcijaAdmin.setSelected(true);
+                opcijaAdmin.setDisable(false);
+                opcijaVlasnik.setDisable(true);
+                opcijaRadnik.setDisable(true);
                 Admin admin = (Admin) novaVrijednost;
                 poljeIme.setText(admin.getIme());
                 poljePrezime.setText(admin.getPrezime());
@@ -185,6 +215,9 @@ public class AdminDashboardController {
             if(novaVrijednost instanceof Vlasnik){
                 opcijaUredjivanje.setSelected(true);
                 opcijaVlasnik.setSelected(true);
+                opcijaVlasnik.setDisable(false);
+                opcijaAdmin.setDisable(true);
+                opcijaRadnik.setDisable(true);
                 Vlasnik vlasnik = (Vlasnik) novaVrijednost;
                 poljeIme.setText(vlasnik.getIme());
                 poljePrezime.setText(vlasnik.getPrezime());
@@ -196,6 +229,9 @@ public class AdminDashboardController {
 
             opcijaUredjivanje.setSelected(true);
             opcijaRadnik.setSelected(true);
+            opcijaRadnik.setDisable(false);
+            opcijaAdmin.setDisable(true);
+            opcijaVlasnik.setDisable(true);
             Radnik radnik = (Radnik) novaVrijednost;
             poljeIme.setText(radnik.getIme());
             poljePrezime.setText(radnik.getPrezime());
@@ -222,6 +258,9 @@ public class AdminDashboardController {
         listaUsera.getSelectionModel().clearSelection();
         opcijaAdmin.setSelected(true);
         opcijaDodavanje.setSelected(true);
+        opcijaAdmin.setDisable(false);
+        opcijaVlasnik.setDisable(false);
+        opcijaRadnik.setDisable(false);
         poljeIme.setText("");
         poljePrezime.setText("");
         poljeKorisnickoIme.setText("");
@@ -254,9 +293,12 @@ public class AdminDashboardController {
         objekti.addAll( dao.selectRadnici() );
         listaUsera.getItems().clear();
         listaUsera.setItems(objekti);
+        opcijaUredjivanje.setDisable(listaUsera.getItems().size() == 0);
+        pocistiFormu();
     }
 
     private void dodajKorisnika(){
+        try{
         if(opcijaAdmin.isSelected()){
           dao.insertAdmin(new Admin(-1, poljeIme.getText(), poljePrezime.getText(), poljeKorisnickoIme.getText(), poljeSifra.getText()));
           dobaviKorisnike();
@@ -271,6 +313,41 @@ public class AdminDashboardController {
       dao.insertRadnik(new Radnik(-1, poljeIme.getText(), poljePrezime.getText(),
               poljeKorisnickoIme.getText(), poljeSifra.getText(), Integer.parseInt(poljePlata.getText()), poljeOdjeljenje.getValue()));
         dobaviKorisnike();
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("POGREŠKA");
+            alert.setContentText("IZUZETAK: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void urediKorisnika(){
+        try {
+            Object selected = listaUsera.getSelectionModel().getSelectedItem();
+            if(opcijaAdmin.isSelected()){
+                Admin admin = (Admin) selected;
+                dao.updateAdmin(new Admin(admin.getID(), poljeIme.getText(), poljePrezime.getText(), poljeKorisnickoIme.getText(), poljeSifra.getText()), admin.getKorisnickoIme());
+                dobaviKorisnike();
+                return;
+            }
+            if(opcijaVlasnik.isSelected()){
+                Vlasnik vlasnik = (Vlasnik) selected;
+                dao.updateVlasnik(new Vlasnik(vlasnik.getID(), poljeIme.getText(), poljePrezime.getText(),
+                        poljeKorisnickoIme.getText(), poljeSifra.getText(), Integer.parseInt(poljePlata.getText())), vlasnik.getKorisnickoIme());
+                dobaviKorisnike();
+                return;
+            }
+            Radnik radnik = (Radnik) selected;
+            dao.updateRadnik(new Radnik(radnik.getID(), poljeIme.getText(), poljePrezime.getText(),
+                    poljeKorisnickoIme.getText(), poljeSifra.getText(), Integer.parseInt(poljePlata.getText()), poljeOdjeljenje.getValue()), radnik.getKorisnickoIme());
+            dobaviKorisnike();
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("POGREŠKA");
+            alert.setContentText("IZUZETAK: " + e.getMessage());
+            alert.showAndWait();
+        }
+
     }
 
 }
