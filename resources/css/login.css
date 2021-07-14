@@ -1,0 +1,15 @@
+.login-kontejner {
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-font-size: 18px;
+}
+
+.potvrdi-dugme {
+    -fx-background-color: #89cff0;
+    -fx-cursor: hand;
+}
+
+.greska-labela {
+    -fx-text-fill: red;
+    -fx-alignment: CENTER;
+}

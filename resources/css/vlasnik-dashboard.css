@@ -1,0 +1,16 @@
+.vlasnik-dashboard-kontejner {
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-font-size: 18px;
+}
+
+.lista-odjeljenja {
+    -fx-pref-width: 500px;
+    -fx-font-size: 14px;
+}
+
+.odjavi-dugme {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}

@@ -1,0 +1,20 @@
+.radnik-informacije-kontejner {
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-font-size: 18px;
+}
+
+.labela-dobrodosli {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.odjavi-dugme {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.boldiran-tekst {
+    -fx-font-weight: bold;
+}

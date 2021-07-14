@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10" styleClass="radnik-informacije-kontejner">
+    <stylesheets>
+        <URL value="@../css/radnik-informacije.css" />
+    </stylesheets>
+    <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Dobrodošli" styleClass="labela-dobrodosli"/>
+    <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Ime" styleClass="boldiran-tekst"/>
+    <Label fx:id="imeRadnika" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Prezime" styleClass="boldiran-tekst"/>
+    <Label fx:id="prezimeRadnika" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Korisničko ime" styleClass="boldiran-tekst"/>
+    <Label fx:id="korisnickoImeRadnika" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+    <Label GridPane.rowIndex="4" GridPane.columnIndex="0" text="Plata" styleClass="boldiran-tekst"/>
+    <Label fx:id="plataRadnika" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+    <Label GridPane.rowIndex="5" GridPane.columnIndex="0" text="Odjeljenje zaposlenika" styleClass="boldiran-tekst"/>
+    <Label fx:id="odjeljenjeRadnika" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+    <Label GridPane.rowIndex="6" GridPane.columnIndex="0" text="Adresa odjeljenja" styleClass="boldiran-tekst"/>
+    <Label fx:id="adresaOdjeljenja" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+    <Button fx:id="odjaviSeButton" GridPane.rowIndex="7" GridPane.columnIndex="0" text="Odjavi se" styleClass="odjavi-dugme"/>
+</GridPane>
