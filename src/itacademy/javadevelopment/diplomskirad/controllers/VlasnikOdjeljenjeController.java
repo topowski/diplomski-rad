@@ -42,7 +42,7 @@ public class VlasnikOdjeljenjeController {
     public Button pocistiFormuDugme;
     public RadioButton opcijaDodavanje;
     public RadioButton opcijaUredjivanje;
-    private HumanResourcesDAO dao;
+    private static HumanResourcesDAO dao;
 
     public VlasnikOdjeljenjeController(Vlasnik vlasnikOdjeljenja, Odjeljenje odjeljenje) {
         this.vlasnikOdjeljenja = vlasnikOdjeljenja;
